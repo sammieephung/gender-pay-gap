@@ -89,6 +89,9 @@ boxplot(Bonus)
 
 describe(pay_clean[, c("BasePay", "Age", "Bonus")]) # looks better now
 
+# Save cleaned data set to .RData file ----
+save(pay_clean, file = here::here("data", "pay_clean.RData"))
+
 # Table 1 Descriptive Statistics ----
 table1 = tableone::CreateTableOne(vars = c("JobTitle",  "Age", "Education", "Dept", 
                                   "Seniority", "BasePay", "Bonus", "PerfEval"),
