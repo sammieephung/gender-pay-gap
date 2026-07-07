@@ -118,6 +118,7 @@ print(table1)
 # set labels for each variable
 pay_clean <- pay_clean |>
   mutate(JobTitle = setLabel(JobTitle, "Vị trí"),
+         Gender = setLabel(Gender, "Giới tính"),
          Age = setLabel(Age, "Tuổi"),
          Education = setLabel(Education, "Học vấn"),
          Dept = setLabel(Dept, "Phòng ban"), 
