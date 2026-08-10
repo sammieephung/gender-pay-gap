@@ -1,0 +1,5 @@
+10/08/2026: data_cleaning
+
+Refined naming convention based on data management principles
+- Change object name for raw data set, from pay_v1 to pay_raw
+- Change object name for data set after first round of cleaning, from pay_clean to pay_cleanv1
