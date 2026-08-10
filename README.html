@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -88,38 +53,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="bất-bình-đẳng-thu-nhập-theo-giới-tính-gender-pay-gap" class="level1">
 <h1>Bất bình đẳng thu nhập theo giới tính (Gender pay gap)</h1>
 <p>My first data analysis project in R as part of coursework for HUSO2313: Analysis &amp; Communication of Social Science Research at RMIT University.</p>
-<section id="repository-structure" class="level2">
-<h2 class="anchored" data-anchor-id="repository-structure">Repository Structure</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> app</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── css</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ├── <span class="pp">**</span>/<span class="pp">*</span>.css</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── favicon.ico</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── images</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── index.html</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   ├── js</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ├── <span class="pp">**</span>/<span class="pp">*</span>.js</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── partials/template</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> dist <span class="er">(</span><span class="ex">or</span> build<span class="kw">)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> node_modules</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> bower_components <span class="er">(</span><span class="cf">if</span> <span class="ex">using</span> bower<span class="kw">)</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> test</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> Gruntfile.js/gulpfile.js</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> README.md</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> package.json</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> bower.json <span class="er">(</span><span class="cf">if</span> <span class="ex">using</span> bower<span class="kw">)</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> .gitignore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="cấu-trúc-repository" class="level2">
+<h2 class="anchored" data-anchor-id="cấu-trúc-repository">Cấu trúc Repository</h2>
 </section>
-<section id="data-dictionary" class="level2">
-<h2 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h2>
+<section id="về-các-biến-trong-data-set-data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="về-các-biến-trong-data-set-data-dictionary">Về các Biến trong Data set (Data Dictionary)</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 85%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 63%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Filename</th>
-<th>File description</th>
+<th>Tên biến</th>
+<th>Loại biến</th>
+<th>Mô tả</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>JobTitle<br>(<em>Vị trí</em>)</td>
+<td>Phân loại</td>
+<td>Vị trí làm việc của người điền khảo sát, bao gồm 10 loại: Manager, Driver, Data Scientist, Software Engineer, IT, Sales Associate, Graphic Designer, Warehouse Associate, Marketing Associate, Financial Analyst.</td>
+</tr>
+<tr class="even">
+<td>Gender<br>(<em>Giới tính</em>)</td>
+<td>Phân loại</td>
+<td>Giới tính theo hệ nhị nguyên của người điền khảo sát, bao gồm 2 loại: Nam (Male) và Nữ (Female)</td>
+</tr>
+<tr class="odd">
+<td>Education <br>(<em>Học vấn</em>)</td>
+<td>Phân loại</td>
+<td>Trình độ học vấn cao nhất của người điền khảo sát, theo thứ tự thấp đến cao: High School (Trung học), College (Cử nhân Đại học), Masters (Thạc sĩ), PhD (Tiến sĩ).</td>
+</tr>
+<tr class="even">
+<td>Dept<br>(<em>Phòng ban</em>)</td>
+<td>Phân loại</td>
+<td>Phòng ban làm việc của người điền khảo sát, bao gồm: Administration (Hành chính), Management (Quản lí), Operations (Vận hành), Engineering (Kĩ thuật) và Sales (Kinh doanh).</td>
+</tr>
+<tr class="odd">
+<td>Seniority<br>(<em>Thâm niên</em>)</td>
+<td>Phân loại</td>
+<td>Thứ bậc thâm niên của người điền khảo sát, trong đó 1 thấp nhất và 5 cao nhất.</td>
+</tr>
+<tr class="even">
+<td>BasePay<br>(<em>Lương cơ bản</em>)</td>
+<td>Liên tục</td>
+<td>Lương cơ bản của người điền khảo sát, đơn vị USD.</td>
+</tr>
+<tr class="odd">
+<td>Bonus<br>(<em>Lương thưởng</em>)</td>
+<td>Liên tục</td>
+<td>Lương thưởng của người điền khảo sát, đơn vị USD.</td>
+</tr>
+<tr class="even">
+<td>Age<br>(<em>Tuổi</em>)</td>
+<td>Liên tục</td>
+<td>Tuổi của người điền khảo sát, đơn vị năm.</td>
+</tr>
+<tr class="odd">
+<td>PerfEval<br>(<em>Đánh giá<br>hiệu suất</em>)</td>
+<td>Phân loại</td>
+<td>Thứ bậc xếp hạng hiệu suất làm việc của người điền khảo sát, trong đó 1 chỉ bậc hiệu suất thấp nhất và 5 chỉ bậc hiệu suất cao nhất.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mô-tả-các-file" class="level2">
+<h2 class="anchored" data-anchor-id="mô-tả-các-file">Mô tả các file</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tên file</th>
+<th>Mô tả</th>
 </tr>
 </thead>
 <tbody>

@@ -1,15 +1,27 @@
 # Bất bình đẳng thu nhập theo giới tính (Gender pay gap)
-My first data analysis project in R as part of coursework for HUSO2313: Analysis &amp; Communication of Social Science Research at RMIT University.
+My first data analysis project in R as part of coursework for HUSO2313: Analysis & Communication of Social Science Research at RMIT University.
 
-## Repository Structure
-
-
-
-## Data Dictionary
+## Cấu trúc Repository
 
 
 
-| Filename          | File description                                                                                                |
-|-------------------|-----------------------------------------------------------------------------------------------------------------|
+## Về các Biến trong Data set (Data Dictionary)
+| Tên biến | Loại biến | Mô tả                                         |
+|---------------|---------------|-----------------------------------------------------|
+| JobTitle<br>(*Vị trí*) | Phân loại | Vị trí làm việc của người điền khảo sát, bao gồm 10 loại: Manager, Driver, Data Scientist, Software Engineer, IT, Sales Associate, Graphic Designer, Warehouse Associate, Marketing Associate, Financial Analyst. |
+| Gender<br>(*Giới tính*) | Phân loại | Giới tính theo hệ nhị nguyên của người điền khảo sát, bao gồm 2 loại: Nam (Male) và Nữ (Female) |
+| Education <br>(*Học vấn*) | Phân loại | Trình độ học vấn cao nhất của người điền khảo sát, theo thứ tự thấp đến cao: High School (Trung học), College (Cử nhân Đại học), Masters (Thạc sĩ), PhD (Tiến sĩ). |
+| Dept<br>(*Phòng ban*) | Phân loại | Phòng ban làm việc của người điền khảo sát, bao gồm: Administration (Hành chính), Management (Quản lí), Operations (Vận hành), Engineering (Kĩ thuật) và Sales (Kinh doanh). |
+| Seniority<br>(*Thâm niên*) | Phân loại | Thứ bậc thâm niên của người điền khảo sát, trong đó 1 thấp nhất và 5 cao nhất. |
+| BasePay<br>(*Lương cơ bản*) | Liên tục | Lương cơ bản của người điền khảo sát, đơn vị USD. |
+| Bonus<br>(*Lương thưởng*) | Liên tục | Lương thưởng của người điền khảo sát, đơn vị USD. |
+| Age<br>(*Tuổi*)| Liên tục | Tuổi của người điền khảo sát, đơn vị năm. |
+| PerfEval<br>(*Đánh giá<br>hiệu suất*) | Phân loại | Thứ bậc xếp hạng hiệu suất làm việc của người điền khảo sát, trong đó 1 chỉ bậc hiệu suất thấp nhất và 5 chỉ bậc hiệu suất cao nhất. |
+
+
+## Mô tả các file 
+
+| Tên file | Mô tả | 
+|-------------------|-----------------------------------------------------------------|
 | pay_raw.xlsx      | Original data set in Excel format, containing 1,000  observations as provided by Kaggle                         |
 | pay_cleanv1.RData | First version of the clean data set in .RData format, with 989 observations and Vietnamese labels for variables |
