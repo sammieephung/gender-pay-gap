@@ -2,8 +2,75 @@
 My first data analysis project in R as part of coursework for HUSO2313: Analysis & Communication of Social Science Research at RMIT University.
 
 ## Cấu trúc Repository
-
-
+```bash
+gender-pay-gap
+├── data
+│   ├── gender-pay-gap-codebook.docx
+│   ├── pay_cleanv1.RData
+│   └── pay_raw.xlsx
+├── docs
+│   ├── index.html
+│   ├── part1.html
+│   ├── part2.html
+│   ├── part3.html
+│   ├── search.json
+│   └── site_libs
+│       ├── bootstrap
+│       │   ├── bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css
+│       │   ├── bootstrap-icons.css
+│       │   ├── bootstrap-icons.woff
+│       │   └── bootstrap.min.js
+│       ├── clipboard
+│       │   └── clipboard.min.js
+│       ├── quarto-html
+│       │   ├── anchor.min.js
+│       │   ├── popper.min.js
+│       │   ├── quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css
+│       │   ├── quarto.js
+│       │   ├── tabsets
+│       │   │   └── tabsets.js
+│       │   ├── tippy.css
+│       │   └── tippy.umd.min.js
+│       ├── quarto-nav
+│       │   ├── headroom.min.js
+│       │   └── quarto-nav.js
+│       └── quarto-search
+│           ├── autocomplete.umd.js
+│           ├── fuse.min.js
+│           └── quarto-search.js
+├── figures
+├── gender-pay-gap.Rproj
+├── index.qmd
+├── part1.qmd
+├── part2.qmd
+├── part3.qmd
+├── README.html
+├── README.md
+├── README_files
+│   └── libs
+│       ├── bootstrap
+│       │   ├── bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css
+│       │   ├── bootstrap-icons.css
+│       │   ├── bootstrap-icons.woff
+│       │   └── bootstrap.min.js
+│       ├── clipboard
+│       │   └── clipboard.min.js
+│       └── quarto-html
+│           ├── anchor.min.js
+│           ├── popper.min.js
+│           ├── quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css
+│           ├── quarto.js
+│           ├── tabsets
+│           │   └── tabsets.js
+│           ├── tippy.css
+│           └── tippy.umd.min.js
+├── Rscripts
+│   ├── data_cleaning.R
+│   ├── data_modelling.R
+│   ├── data_viz.R
+│   └── LesaHoffman_Functions.R
+└── _quarto.yml
+```
 
 ## Về các Biến trong Data set (Data Dictionary)
 | Tên biến | Loại biến | Mô tả                                         |
