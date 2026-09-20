@@ -7,25 +7,25 @@ pacman::p_load(tidyverse, # for data wrangling + visualisation
                gt) # for html tables 
               
 # Import cleaned data set ----
-load(here::here("data", "pay_clean.RData"))
+load(here::here("data", "pay_cleanv1v1.RData"))
 
 # Create new variable for TotalPay = BasePay + Bonus 
-# pay_clean <- pay_clean |>
+# pay_cleanv1v1 <- pay_cleanv1v1 |>
 #   mutate(TotalPay = BasePay + Bonus)
-# attr(pay_clean$TotalPay, "label") <- "Tổng lương (USD)"
+# attr(pay_cleanv1v1$TotalPay, "label") <- "Tổng lương (USD)"
 
 # Descriptive stats
-psych::describe(pay_clean)
+psych::describe(pay_cleanv1)
 
 # Histograms for BasePay & Bonus ----
-p1 <- ggplot(pay_clean, aes(BasePay)) +
+p1 <- ggplot(pay_cleanv1, aes(BasePay)) +
   geom_histogram(binwidth = 5000, col = "black") +
   scale_y_continuous(limits = c(0, 100), expand = c(0, 0)) +
   theme(panel.background = element_blank(),
         panel.border = element_rect(colour = "black"),
         axis.title.y = element_blank())
 
-p2 <- ggplot(pay_clean, aes(Bonus)) +
+p2 <- ggplot(pay_cleanv1, aes(Bonus)) +
   geom_histogram(binwidth = 500, col = "black") +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 100)) +
   theme(panel.background = element_blank(),
@@ -33,19 +33,20 @@ p2 <- ggplot(pay_clean, aes(Bonus)) +
         axis.title.y = element_blank())
 
 patchwork1 <- p1 + p2
-patchwork1 + plot_annotation(title = "Phân bố Lương cơ bản và Lương thưởng")
+patchwork1 + plot_annotation(title = "Phân bố Lương cơ bản và Lương thưởng",
+                             theme = theme(plot.title = element_text(size = 20, hjust = 0.035)))
 
 # Overall Gender Pay Gap ----
 
 ## Box plots ----
-p3 <- ggplot(pay_clean, aes(BasePay, Gender)) +
+p3 <- ggplot(pay_cleanv1, aes(BasePay, Gender)) +
   # draw ticks for min/max at the ends of whisker
   stat_boxplot(geom = "errorbar", width = 0.1) +
   geom_boxplot(fill = "lightgrey") +
   theme(panel.background = element_blank(),
         panel.border = element_rect(colour = "black")) 
 
-p4 <- ggplot(pay_clean, aes(Bonus, Gender)) +
+p4 <- ggplot(pay_cleanv1, aes(Bonus, Gender)) +
   # draw ticks for min/max at the ends of whisker
   stat_boxplot(geom = "errorbar", width = 0.1) +
   geom_boxplot(fill = "lightgrey") +
@@ -54,11 +55,11 @@ p4 <- ggplot(pay_clean, aes(Bonus, Gender)) +
 
 # graph one plot on top of the other
 # merge y-axis titles and add spacer for better aspect ratio
-patchwork2 <- (p3 / p4) + plot_layout(axis_titles = "collect") | plot_spacer()
-patchwork2 + plot_annotation(title = "Phân bố Lương cơ bản và Lương thưởng theo Giới tính")
+# patchwork2 <- (p3 / p4) + plot_layout(axis_titles = "collect") | plot_spacer()
+# patchwork2 + plot_annotation(title = "Phân bố Lương cơ bản và Lương thưởng theo Giới tính")
 
 ## Table of of overall mean pay and pay gap (UNFINISHED) ----
-pay_clean |>
+pay_cleanv1 |>
   summarise(meanBase = mean(BasePay),
             meanBonus = mean(Bonus),
             .by = Gender) |> # no ungrouping needed
@@ -97,18 +98,18 @@ pay_clean |>
   tab_style(style = cell_text(size = "smaller"),
             locations = cells_footnotes())
 
-# Gender pay gap by ___ ----
+# Gender pay gap by ----
 
 ## Age group ----
 # Create age group variable
-pay_clean$AgeGroup = cut(pay_clean$Age, breaks = c(18, 25, 35, 45, 55, 65, Inf),
+pay_cleanv1$AgeGroup = cut(pay_cleanv1$Age, breaks = c(18, 25, 35, 45, 55, 65, Inf),
                          right = F, 
                          labels = c("Dưới 25 tuổi", "25-34 tuổi", "35-44 tuổi", 
                                     "45-54 tuổi", "55-64 tuổi", "Trên 65 tuổi"))
-attr(pay_clean$AgeGroup, "label") <- "Nhóm tuổi"
+attr(pay_cleanv1$AgeGroup, "label") <- "Nhóm tuổi"
 
 
-pay_clean |>
+pay_cleanv1 |>
   summarise(mean = mean(BasePay),
             .by = c(AgeGroup, Gender)) |>
   pivot_wider(names_from = Gender,
@@ -124,19 +125,18 @@ pay_clean |>
                      expand = c(0, 0),
                      labels = label_percent(),
                      name = "Chênh lệch (%)") +
-  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Nhóm tuổi",
-       subtitle = "Chênh lệch = (Lương TB của Nam - Lương TB của Nữ) / Lương TB của Nam * 100%") +
+  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Nhóm tuổi") +
   theme(panel.border = element_rect(colour = "black"),
         panel.background = element_blank())
 
-# meanbonus_age <- pay_clean |>
+# meanbonus_age <- pay_cleanv1 |>
 #   summarise(mean = mean(Bonus),
 #             .by = c(AgeGroup, Gender)) |>
 #   pivot_wider(names_from = Gender,
 #               values_from = mean) |>
 #   mutate(bonus_gap = (Male - Female) / Male)
 
-# meantotal_age <- pay_clean |>
+# meantotal_age <- pay_cleanv1 |>
 #   summarise(mean = mean(TotalPay),
 #             .by = c(AgeGroup, Gender)) |>
 #   pivot_wider(names_from = Gender,
@@ -162,7 +162,7 @@ pay_clean |>
 
 ## Education ----
 
-pay_clean |>
+pay_cleanv1 |>
   summarise(meanBase = mean(BasePay),
             .by = c(Education, Gender)) |>
   pivot_wider(id_cols = Education,
@@ -177,13 +177,12 @@ pay_clean |>
                      expand = c(0, 0),
                      labels = label_percent(),
                      name = "Chênh lệch (%)") +
-  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Học vấn",
-       subtitle = "Chênh lệch = (Lương TB của Nam - Lương TB của Nữ) / Lương TB của Nam * 100%") +
+  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Học vấn") +
   theme(panel.border = element_rect(colour = "black"),
         panel.background = element_blank())
 
 ## Dept ----
-pay_clean |>
+pay_cleanv1 |>
   summarise(meanBase = mean(BasePay),
             .by = c(Dept, Gender)) |>
   pivot_wider(id_cols = Dept,
@@ -198,13 +197,12 @@ pay_clean |>
                      expand = c(0, 0),
                      labels = label_percent(),
                      name = "Chênh lệch (%)") +
-  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Phòng ban",
-       subtitle = "Chênh lệch = (Lương TB của Nam - Lương TB của Nữ) / Lương TB của Nam * 100%") +
+  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Phòng ban") +
   theme(panel.border = element_rect(colour = "black"),
         panel.background = element_blank())
 
 ## Seniority ----
-pay_clean |>
+pay_cleanv1 |>
   summarise(meanBase = mean(BasePay),
             .by = c(Seniority, Gender)) |>
   pivot_wider(id_cols = Seniority,
@@ -219,13 +217,12 @@ pay_clean |>
                      expand = c(0, 0),
                      labels = label_percent(),
                      name = "Chênh lệch (%)") +
-  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Bậc Thâm niên",
-       subtitle = "Chênh lệch = (Lương TB của Nam - Lương TB của Nữ) / Lương TB của Nam * 100%") +
+  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Bậc Thâm niên") +
   theme(panel.border = element_rect(colour = "black"),
         panel.background = element_blank())
 
 ## PerfEval
-pay_clean |>
+pay_cleanv1 |>
   summarise(meanBase = mean(BasePay),
             .by = c(PerfEval, Gender)) |>
   pivot_wider(id_cols = PerfEval,
@@ -240,7 +237,6 @@ pay_clean |>
                      expand = c(0, 0),
                      labels = label_percent(),
                      name = "Chênh lệch (%)") +
-  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Đánh giá Hiệu suất",
-       subtitle = "Chênh lệch = (Lương TB của Nam - Lương TB của Nữ) / Lương TB của Nam * 100%") +
+  labs(title = "Chênh lệch về Lương cơ bản giữa Nam và Nữ theo Đánh giá Hiệu suất") +
   theme(panel.border = element_rect(colour = "black"),
         panel.background = element_blank())

@@ -10,7 +10,7 @@ pacman::p_load(
   psych, # for descriptive stats
   naniar, # to assess missing data
   table1,
-  tableone
+  tableone # for table of descriptive stats
 ) # for descriptive stats table
 
 # Import data set ----
@@ -42,9 +42,9 @@ sapply(cat_vars, function(x) unique(x))
 
 # check each quantitative variable for NA/non-digit entries
 pay_raw |>
-  filter(str_detect(BasePay, "\\D") | is.na(BasePay)) # "100463P"
+  filter(str_detect(BasePay, "\\D") | is.na(BasePay)) # "100463P" & NA
 pay_raw |>
-  filter(str_detect(Age, "\\D") | is.na(Age))
+  filter(str_detect(Age, "\\D") | is.na(Age)) # "."
 pay_raw |>
   filter(str_detect(Bonus, "\\D") | is.na(Bonus))
 
@@ -59,16 +59,16 @@ naniar::miss_case_summary(pay_raw) # in individual cases
 mcar_test(pay_raw) # p = .598, thus data is MCAR
 
 ## Remove all NAs & invalid entries ----
-pay_raw <- pay_raw |>
+pay_cleanv1 <- pay_raw |>
   drop_na() |> # 7 cases dropped
-  filter_out(BasePay == "100463P" | PerfEval == "10") # 2 invalids
+  filter_out(BasePay == "100463P" | PerfEval == "10") # 2 invalids dropped
 
 # DATA WRANGLING ----
 
 ## Change all variables into appropriate type based on codebook ----
-str(pay_raw) # initial data structure
+str(pay_cleanv1) # initial data structure
 
-pay_raw <- pay_raw |>
+pay_cleanv1 <- pay_cleanv1 |>
   mutate(
     JobTitle = as.factor(JobTitle),
     Gender = as.factor(Gender), # Female will be ref
@@ -84,43 +84,46 @@ pay_raw <- pay_raw |>
     PerfEval = factor(PerfEval, levels = c("1", "2", "3", "4", "5"))
   )
 
+str(pay_cleanv1) # re-check data structure OK
+
 ## Descriptive stats for quantitative variables ----
-describe(pay_raw[, c("BasePay", "Age", "Bonus")])
+describe(pay_cleanv1[, c("BasePay", "Age", "Bonus")])
 # BasePay & Bonus are heavily skewed by absurd max values
 # max Age also does not make sense
 
 ## Examine outliers ----
 par(mfrow = c(1, 3)) # for side-by-side boxplots
-attach(pay_raw)
-boxplot(BasePay)
-boxplot(Age)
-boxplot(Bonus)
+boxplot(pay_cleanv1$BasePay)
+boxplot(pay_cleanv1$Age)
+boxplot(pay_cleanv1$Bonus)
 
 # max and mean for each quant variables
-cbind(max_BasePay = max(BasePay), max_Age = max(Age), max_Bonus = max(Bonus))
 cbind(
-  mean_BasePay = mean(BasePay),
-  mean_Age = mean(Age),
-  mean_Bonus = mean(Bonus)
+    max_BasePay = max(pay_cleanv1$BasePay), 
+    max_Age = max(pay_cleanv1$Age), 
+    max_Bonus = max(pay_cleanv1$Bonus)
+)
+cbind(
+  mean_BasePay = mean(pay_cleanv1$BasePay),
+  mean_Age = mean(pay_cleanv1$Age),
+  mean_Bonus = mean(pay_cleanv1$Bonus)
 )
 
-# correct/remove outliers
-pay_raw <- pay_raw |>
+# correct or remove outliers
+pay_cleanv1 <- pay_cleanv1 |>
   mutate(BasePay = replace_values(BasePay, 670890 ~ 67089)) |>
   # remove last 0 digit at the end from BasePay outlier
   filter_out(Age == max(Age) | Bonus == max(Bonus))
-# remove Age outlier and Bonus outlier
+  # remove Age outlier and Bonus outlier
 
 # re-check after correction/removal
-attach(pay_raw)
-boxplot(BasePay)
-boxplot(Age)
-boxplot(Bonus)
+boxplot(pay_cleanv1$BasePay)
+boxplot(pay_cleanv1$Age)
+boxplot(pay_cleanv1$Bonus)
 
-describe(pay_raw[, c("BasePay", "Age", "Bonus")]) # looks better now
+describe(pay_cleanv1[, c("BasePay", "Age", "Bonus")]) # looks better now
 
 # Save cleaned data set to .RData file ----
-pay_cleanv1 <- pay_raw
 save(pay_cleanv1, file = here::here("data", "pay_cleanv1.RData"))
 
 # Table 1 Descriptive Statistics ----
@@ -143,7 +146,7 @@ tableone::CreateTableOne(
   addOverall = T
 ) |>
   print() |>
-  # kableone() # html
+  kableone() # html
 
   ## table1 package ----
 
